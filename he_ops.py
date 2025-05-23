@@ -7,7 +7,7 @@ def make_context(key_dir="./keys"):
 #2. 암호문 상태에서 내적(dot product) 계산 함수
 def encrypted_dot(context, x, w):
     # 1) 입력 벡터 암호화
-    x_he = HESeries(context, x)
+    x_he = HESeries(context, x, encrypt=True)
 
     # 2) 가중치 벡터 암호화
     w_he = HESeries(context, w.tolist())
@@ -15,10 +15,10 @@ def encrypted_dot(context, x, w):
     # 3) 슬롯별 곱셈 (암호문 상태)
     prod = x_he * w_he
     
-    # 4) 복호화 후 평문 벡터로 변환
-    vec = prod.to_series()
+    # 4) 암호문 상태에서 합산 (예: 모든 슬롯 합산)
+    dot_product_encrypted = prod.sum()  # HEaaN에서 지원하는 암호문 합산 함수 사용
 
     # 5) 평문 벡터 합산하여 dot product 반환
-    return vec.sum()
+    return dot_product_encrypted
 
   
