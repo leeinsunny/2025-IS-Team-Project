@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 from model_utils import load_scaler, load_model_parameters
-from he_ops      import make_context, encrypted_do
+from he_ops      import make_context, encrypted_dot
 
 # -- 1. 사용자 입력값 (예시: BMI, 혈압 등)
 x_raw = [23.1, 120.0, 75.0, 88.5, 5.0, 1.0, 0.0, 1.0, 0.0, 0.0]
