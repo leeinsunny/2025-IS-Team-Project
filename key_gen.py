@@ -29,11 +29,11 @@ weights, bias = load_model_parameters(
     w_path="data/lr_weights.npy",
     b_path="data/lr_bias.npy"
 )
-dot_plain = encrypted_dot(context, x_scaled.tolist(), weights)
-print(f"✅  Dot product (암호화상태): {dot_plain}")
+dot_cipher = encrypted_dot(context, x_scaled.tolist(), weights)
+print(f"✅  Dot product (암호화상태): {dot_cipher}")
 
 
-z    = dot_plain + bias
+z    = dot_cipher + bias
 def encrypted_sigmoid(enc_val):
     x = enc_val
     x3 = x * x * x
@@ -48,3 +48,12 @@ print(prob_plain)
 pred = int(prob_val >= 0.5)
 print(f"✅ 예측 확률: {prob_val:.4f}")
 print(f"✅  예측 결과 (0=No, 1=Yes): {pred}")
+
+
+
+#TODO
+#14 - 33 ? 36? 까지는 프론트에서 처리
+#37 - 41은 서버에서 연산
+# 이후 서버연산값을 프론트에 넘겨서 여기서 복호화 
+# 그리고 지금 생각해볼게 bias는 평문연산인데 dot_cipher가 암호문이라 암호문  + 평문도 암호문으로 인식
+# bias 도 암호처리 해야 발표할때 뭔가 서버측에서도 weight 랑 bias를 암호화해서 관리하고 있다 보여줄수있을듯 
