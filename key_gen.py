@@ -16,7 +16,7 @@ context = heaan_stat.Context(
     generate_keys=False,  # To use existing keys, set it to False or omit this
 )
 
-x_raw = [23.1, 120.0, 75.0, 88.5, 5.0, 1.0, 0.0, 1.0, 0.0, 0.0]
+x_raw = [26.7, 122.0, 72.0, 69, 1.0, 1.0, 134.59, 14.94, 209.0, 176.47]
 print(f"✅ 사용자 입력값: {x_raw}")
 
 # -- 2. 스케일러 로드 및 정규화
@@ -29,22 +29,30 @@ weights, bias = load_model_parameters(
     w_path="data/lr_weights.npy",
     b_path="data/lr_bias.npy"
 )
-dot_cipher = encrypted_dot(context, x_scaled.tolist(), weights)
+
+# 암호화 실행 
+dot_cipher = encrypted_dot(context, x_scaled.tolist(), weights,bias)
 print(f"✅  Dot product (암호화상태): {dot_cipher}")
 
 
-z    = dot_cipher + bias
-def encrypted_sigmoid(enc_val):
-    x = enc_val
-    x3 = x * x * x
-    return 0.5 + (0.197 * x) - (0.004 * x3)
-prob = encrypted_sigmoid(z)
+def encrypted_sigmoid_approximate_equation(z):
+    z1 = z
+    z3 = z1 * z1 * z1
+    z5 = z3 * z1 * z1
+    z7 = z5 * z1 * z1
+    return 0.5 + 0.2166 * z1 - 0.0087 * z3 + 0.00023 * z5 - 0.0000021 * z7
 
-print(prob)
-prob_plain = prob.decrypt(False).to_series()
+
+#암호화값 근사 시그모이드에 넣기
+prob = encrypted_sigmoid_approximate_equation(dot_cipher)
+
+print(f"근사 sigmoid 통과 후:{prob}")
+
+#근사 시그모이드 출력값 복호화
+prob_plain = prob.decrypt().to_series()
 prob_val = prob_plain.iloc[0]
 
-print(prob_plain)
+print('복호화 값:',prob_plain)
 pred = int(prob_val >= 0.5)
 print(f"✅ 예측 확률: {prob_val:.4f}")
 print(f"✅  예측 결과 (0=No, 1=Yes): {pred}")
