@@ -26,28 +26,29 @@ X = df.drop(columns=["SEQN", "DIQ010"])
 X = X.select_dtypes(include=["float64", "int64"])  # 숫자형만
 y = df["DIQ010"].astype(int)
 
-# 3. 정규화
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+print(X.columns.tolist())
+# # 3. 정규화
+# scaler = StandardScaler()
+# X_scaled = scaler.fit_transform(X)
 
-# 4. 모델 학습
-model = LogisticRegression()
-model.fit(X_scaled, y)
+# # 4. 모델 학습
+# model = LogisticRegression()
+# model.fit(X_scaled, y)
 
-# 5. 가중치 및 바이어스 추출
-weights = model.coef_[0]
-bias = model.intercept_[0]
+# # 5. 가중치 및 바이어스 추출
+# weights = model.coef_[0]
+# bias = model.intercept_[0]
 
-print("✅ 학습 완료")
-print("가중치 shape:", weights.shape)
-print("바이어스:", bias)
+# print("✅ 학습 완료")
+# print("가중치 shape:", weights.shape)
+# print("바이어스:", bias)
 
-# 6. 저장 (모두 data 폴더에)
-os.makedirs("data", exist_ok=True)
-np.save("data/lr_weights.npy", weights)
-np.save("data/lr_bias.npy", np.array([bias]))
-dump(scaler, "data/scaler.pkl")
+# # 6. 저장 (모두 data 폴더에)
+# os.makedirs("data", exist_ok=True)
+# np.save("data/lr_weights.npy", weights)
+# np.save("data/lr_bias.npy", np.array([bias]))
+# dump(scaler, "data/scaler.pkl")
 
-# 7. 모델 저장
-print("✅ 저장 완료 (weights, bias, scaler)")
+# # 7. 모델 저장
+# print("✅ 저장 완료 (weights, bias, scaler)")
 

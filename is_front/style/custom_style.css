@@ -1,0 +1,83 @@
+/* 📁 style/custom_style.css */
+
+/* 전체 배경 이미지 */
+body {
+    background-size: cover;
+    background-position: center;
+    font-family: 'Poppins', sans-serif;
+    color: #111;
+}
+
+/* 카드 스타일 박스 */
+div[data-testid="stForm"] {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    margin: auto;
+}
+
+/* 입력 필드 */
+input, select, textarea {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* 버튼 (오렌지-블루 그라데이션) */
+button[kind="primary"] {
+    background: linear-gradient(to right, #ff6a00, #008cff) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 10px 24px !important;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+button[kind="primary"]:hover {
+    background: linear-gradient(to right, #008cff, #ff6a00) !important;
+    opacity: 0.9;
+}
+
+/* 도넛 차트 상단 정렬용 */
+div.element-container:has(.js-plotly-plot) {
+    margin-top: 20px;
+}
+
+/* Summary 텍스트 스타일 */
+strong, span {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* 반응형 폼 너비 조정 */
+@media screen and (max-width: 768px) {
+    div[data-testid="stForm"] {
+        padding: 20px;
+        border-radius: 12px;
+    }
+}
+
+.hero {
+    background-image: url('https://images.unsplash.com/photo-1588776814546-ec7e93c6e3f8');
+    background-size: cover;
+    background-position: center;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+}
+.hero h1 {
+    font-size: 2.6rem;
+    margin-bottom: 10px;
+}
+.hero p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+

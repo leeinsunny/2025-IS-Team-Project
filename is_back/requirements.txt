@@ -1,0 +1,5 @@
+# 프론트엔드(스트림릿) 환경
+pip install streamlit heaan_stat requests numpy pandas
+
+# 백엔드(Flask) 환경
+pip install flask heaan_stat
