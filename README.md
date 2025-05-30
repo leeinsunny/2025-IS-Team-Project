@@ -128,3 +128,16 @@ streamlit run streamlit_app.py
 - NHANES 2013–2014 Dataset (CDC)
 - HEaaN GitHub: https://github.com/snucrypto/HEaan
 - American Diabetes Association Guidelines
+
+---
+
+## 📄 Project Documents
+
+| Type       | Description                                                    | Download Link                                                                 |
+|------------|----------------------------------------------------------------|--------------------------------------------------------------------------------|
+| 📝 Proposal  | Initial planning, NHANES data selection, encryption model design | [IS_Proposal_Team8.pdf](./IS%20Proposal%20Team8.pdf)                           |
+| 🔧 Progress  | Model performance comparison, recall-priority strategy        | [IS_Progress_Team8.pdf](./IS%20Progress%20Team8.pdf)                           |
+| 📊 Final     | Scenario-driven HE pipeline design + full encryption workflow  | [IS_Final_Team8.pptx.pdf](./IS%20Final%20Team8.pptx.pdf)                       |
+
+> These documents cover the full lifecycle of the project, from idea to final implementation using homomorphic encryption for secure diabetes prediction.
+
