@@ -136,7 +136,7 @@ streamlit run streamlit_app.py
 | Type       | Description                                                  | Link                                                                 |
 |------------|--------------------------------------------------------------|----------------------------------------------------------------------|
 | 📝 Proposal  | Initial plan, NHANES data selection, encryption model design | [View Proposal PDF](https://drive.google.com/file/d/1c9pHrGpb5MCdA5KvNrHZ9loxfTVEEIFL/view?usp=drive_link) |
-| 🔧 Progress  | Model comparison and architecture evolution                 | [View Progress PDF]([https://drive.google.com/file/d/파일ID/view?usp=sharing](https://drive.google.com/file/d/1k09PPMnGarcZvXBe-f8M0OrL1irco199/view?usp=sharing)) |
+| 🔧 Progress  | Model comparison and architecture evolution                 | [View Progress PDF](https://drive.google.com/file/d/1k09PPMnGarcZvXBe-f8M0OrL1irco199/view?usp=drive_link) |
 | 📊 Final     | Scenario-based full HE pipeline with visualization          | [View Final PDF](https://drive.google.com/file/d/1tKmTXmF9srvU84Kq0n36rVcgsFnVIY6S/view?usp=drive_link) |
 
 > These documents cover the full lifecycle of the project, from idea to final implementation using homomorphic encryption for secure diabetes prediction.
