@@ -133,11 +133,11 @@ streamlit run streamlit_app.py
 
 ## 📄 Project Documents
 
-| Type       | Description                                                    | Download Link                                                                 |
-|------------|----------------------------------------------------------------|--------------------------------------------------------------------------------|
-| 📝 Proposal  | Initial planning, NHANES data selection, encryption model design | [IS_Proposal_Team8.pdf](./IS%20Proposal%20Team8.pdf)                           |
-| 🔧 Progress  | Model performance comparison, recall-priority strategy        | [IS_Progress_Team8.pdf](./IS%20Progress%20Team8.pdf)                           |
-| 📊 Final     | Scenario-driven HE pipeline design + full encryption workflow  | [IS_Final_Team8.pptx.pdf](./IS%20Final%20Team8.pptx.pdf)                       |
+| Type       | Description                                                  | Link                                                                 |
+|------------|--------------------------------------------------------------|----------------------------------------------------------------------|
+| 📝 Proposal  | Initial plan, NHANES data selection, encryption model design | [View Proposal PDF](https://drive.google.com/file/d/1c9pHrGpb5MCdA5KvNrHZ9loxfTVEEIFL/view?usp=drive_link) |
+| 🔧 Progress  | Model comparison and architecture evolution                 | [View Progress PDF]([https://drive.google.com/file/d/파일ID/view?usp=sharing](https://drive.google.com/file/d/1k09PPMnGarcZvXBe-f8M0OrL1irco199/view?usp=sharing)) |
+| 📊 Final     | Scenario-based full HE pipeline with visualization          | [View Final PDF](https://drive.google.com/file/d/1tKmTXmF9srvU84Kq0n36rVcgsFnVIY6S/view?usp=drive_link) |
 
 > These documents cover the full lifecycle of the project, from idea to final implementation using homomorphic encryption for secure diabetes prediction.
 
