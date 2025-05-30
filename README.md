@@ -1,112 +1,130 @@
-# 📊 Privacy‐Preserving Diabetes Risk Prediction
+# 2025 Team 8 – Privacy-Preserving Diabetes Prediction System
 
-> **팀 프로젝트 목표**
-1. **로지스틱 회귀 모델 학습**  
-   - NHANES 2013–2014 건강 데이터를 기반으로 주요 피처(공복 혈당, BMI, 인슐린 수치, 혈압 등)를 활용해  
-   - 당뇨병 발병 확률을 0–1 범위의 확률값으로 예측하는 모델 구축 :contentReference[oaicite:0]{index=0}
+## 🔍 Project Overview
 
-2. **CKKS 동형암호 기반 안전 추론 파이프라인 구현**  
-   - HeaAN Stat 시뮬레이터를 사용한 CKKS 암호화  
-   - 암호화된 상태에서 평균, 상관분석, 로지스틱 회귀 추론 등 연산 수행  
-   - 데이터 복호화 없이 예측 결과 제공 :contentReference[oaicite:1]{index=1}
----
+This project implements a fully encrypted diabetes prediction system based on CKKS homomorphic encryption (HE), using the NHANES 2013–2014 dataset. Users' health information is encrypted on the client side and processed securely on the server without any decryption, ensuring complete data privacy.
 
-## 🚩 목차
+## 📁 System Components
 
-1️⃣ [진행 현황 & 체크리스트](#1️⃣-진행-현황--체크리스트)
-2️⃣ [프로젝트 구조](#2️⃣-프로젝트-구조)
-3️⃣ [환경 설정](#3️⃣-환경-설정)
-4️⃣ [사용법](#4️⃣-사용법)
-5️⃣ [향후 계획](#5️⃣-향후-계획)
+- **Frontend**: Streamlit interface, CKKS key generation and encryption using HEaaN
+- **Backend**: Flask API, inference with pre-trained logistic regression model
+- **Encryption Library**: HEaaN Stat SDK (CKKS scheme)
+- **Model**: Logistic Regression (`class_weight='balanced'`), AUC ≥ 0.8
 
 ---
 
-## 1️⃣ 진행 현황 & 체크리스트
+## ⚙️ 1. Execution Manual
 
-|  단계 | 설명                                                                                                                                        |    상태   |
-| :-: | :---------------------------------------------------------------------------------------------------------------------------------------- | :-----: |
-| 1️⃣ | **데이터 준비**<br>- NHANES CSV (`demographic.csv`, `diet.csv`, `examination.csv`, `labs.csv`, `questionnaire.csv`)<br>- `merged_clean.csv` 생성 |   ✅ 완료  |
-| 2️⃣ | **평문 모델 학습** (`train_model.py`)<br>- StandardScaler 학습 → `scaler.pkl` 저장<br>- LogisticRegression 학습 → `lr_weights.npy`, `lr_bias.npy` 저장  |   ✅ 완료  |
-| 3️⃣ | **HEaaN Stat 시뮬 시연** (`*.ipynb`)<br>- `HESeries`, `HEFrame` 기본 연산<br>- 벡터 곱셈/덧셈, 통계 기능                                                    |   ✅ 완료  |
-| 4️⃣ | **모듈화**<br>- `model_utils.py`<br>- `he_ops.py`                                                                                            |   ✅ 완료  |
-| 5️⃣ | **암호화된 추론** (`predict_encrypted.py`)<br>- 사용자 입력 → 암호화<br>- Homomorphic 곱셈 → 복호화 → sigmoid → 예측 결과 저장                                     |   ✅ 완료  |
-| 6️⃣ | **UI/시각화**<br>- 사용자 프론트엔드 화면 설계 <br>- 상관관계 히트맵                                                                                              | 🔲 진행 중 |
+### 0️⃣ Prerequisites
 
----
-## 2️⃣ 프로젝트 구조
+- Python ≥ 3.10
+- Docker (for HEaaN container) strongly recommended
+- Ubuntu 20.04+ or WSL2 environment
 
-- **TUTORIAL/**  
-  - **data/** ← 원본·전처리된 NHANES 데이터  
-    - `demographic.csv`  
-    - `diet.csv`  
-    - `examination.csv`  
-    - `labs.csv`  
-    - `questionnaire.csv`  
-    - `merged_clean.csv` ← 통합·정제된 학습용 데이터  
-    - `scaler.pkl` ← StandardScaler 객체  
-    - `lr_weights.npy` ← 학습된 로지스틱 회귀 가중치  
-    - `lr_bias.npy` ← 학습된 절편(bias)  
-    - `prediction_result.csv` ← 예측 스크립트 결과 저장  
-  - **keys/** ← pi-heaan 시뮬레이터 키 파일  
-  - `train_model.py` ← (1️⃣) 평문 모델 학습 스크립트  
-  - `model_utils.py` ← scaler·파라미터 로더  
-  - `he_ops.py` ← Context 생성·암호화 내적 함수  
-  - `predict_encrypted.py` ← (5️⃣) 암호화된 추론 파이프라인  
-  - `new_predict_encrypted.py` ← 모듈화 버전  
-  - `*.ipynb` ← HEaaN.Stat 기본 실습 노트북  
-
----
-## 3️⃣ 환경 설정
-
-1. **Docker & WSL2**
-
-   * Docker Desktop 설치 + WSL2 통합 활성화
-2. **HEaaN Stat 컨테이너 실행**
-
-   ```bash
-   docker run -p 8888:8888 -it cryptolabinc/heaan-stat:1.0.0-cpu
-   ```
-3. **VSCode → Remote Explorer → Attach to Container**
-4. **컨테이너 내부에서 라이브러리 설치**
-
-   ```bash
-   pip install scikit-learn pandas numpy joblib streamlit
-   ```
-5. **코드 복사/동기화**
-
-   * `docker cp` 혹은 VSCode drag\&drop 으로 `TUTORIAL/` 폴더 동기화
-
----
-
-## 4️⃣ 사용법
-
-### 4.1 평문 모델 학습
+### 1️⃣ Backend (Flask)
 
 ```bash
-cd /root/tutorial
-python3 train_model.py
+cd 2025-IS-Team-Project/is_back
+pip install -r requirements.txt
+python3 app.py
 ```
 
-### 4.2 암호화된 추론
+- Creates the following folders:
+  - `is_back/uploads/public_keypack/`
+  - `is_back/uploads/xhe/`
+- **Backend must be started before the frontend.**
+
+### 2️⃣ Frontend (Streamlit)
+
+(Open a new terminal window)
 
 ```bash
-python3 predict_encrypted.py
-# 또는 모듈화 버전
-python3 new_predict_encrypted.py
+cd 2025-IS-Team-Project/is_front
+pip install -r requirements.txt
+streamlit run streamlit_app.py
 ```
 
-### 4.3 (옵션) Streamlit UI
-
-```bash
-streamlit run app.py
-```
+- Visit: [http://localhost:8501](http://localhost:8501)
 
 ---
 
-## 5️⃣ 향후 계획
+## 👤 2. User Input Example
 
-* 🔳 **UI 고도화**: 사용자로부터 건강 정보를 입력받고, 입력받은 건강정보를 바탕으로 당뇨병 예측
-* 🔳 **성능 평가**: 평문 vs 암호문 추론 속도/정확도 비교
-* 🔳 **보고서 & 발표 자료**: 구현 구조도, 실험 결과, 보안/프라이버시 해설
+| Field               | Description                    | Example Value |
+|--------------------|--------------------------------|---------------|
+| Name               | 사용자 이름                     | John Doe      |
+| Age                | 나이                            | 62            |
+| Gender             | 성별 (1=Male, 0=Female)         | 1.0           |
+| BMI                | 체질량지수                      | 25.8          |
+| Systolic BP        | 수축기 혈압                      | 134.0         |
+| Diastolic BP       | 이완기 혈압                      | 64.0          |
+| Insulin            | 인슐린 수치 (uU/mL)              | 14.94         |
+| Glucose (2hr OGTT) | 2시간 경구당부하 혈당             | 134.60        |
+| Cholesterol        | 총 콜레스테롤 (mg/dL)            | 131.0         |
+| Sugar Intake       | 당 섭취량 (g/day)                | 41.09         |
+| Smoking Status     | 흡연 여부 (1=Yes, 0=No)          | 1.0           |
 
+---
 
+## 🔐 3. Encryption Flow (Client: `Health_Form.py`)
+
+1. Normalize input and append `1.0` for bias term
+2. Generate HE keys (`public`, `secret`, `relin`, `rotate`) → stored in `is_front/keys/`
+3. Encrypt normalized input → store as `x_he.bin`
+4. Send `x_he.bin` + `public_keypack` to:
+   - `is_back/uploads/xhe/`
+   - `is_back/uploads/public_keypack/`
+5. Trigger prediction via `/predict` endpoint
+
+---
+
+## ⚙️ 4. Server-side Flow (Backend)
+
+1. Load `public_keypack` to reconstruct HE context
+2. Load `x_he.bin` → restore ciphertext input
+3. Load model weights + bias and encode as plaintext block
+4. Perform dot product → add bias (merged into input)
+5. Apply polynomial sigmoid approximation
+6. Store result ciphertext → returned to client
+
+---
+
+## 🔓 5. Decryption and Visualization (Client)
+
+- Load `data/result_block.bin`
+- Decrypt using secret key from local `keys/`
+- Visualize prediction using Streamlit
+
+---
+
+## 🗂 6. Directory Structure Summary
+
+| File/Key                 | Path                            | Description                      |
+|--------------------------|---------------------------------|----------------------------------|
+| Public KeyPack           | `is_back/uploads/public_keypack`| Server-side context for HE       |
+| Encrypted Input (`x_he`) | `is_back/uploads/xhe/x_he.bin`  | User ciphertext                  |
+| Encrypted Output         | `is_front/data/result_block.bin`| Encrypted prediction             |
+| Secret Key + All Keys    | `is_front/keys/`                | Stored locally on client         |
+
+---
+
+## 🎯 Final Notes
+
+- The **entire pipeline** runs with encrypted data.
+- No plaintext is stored or processed on the server.
+- Decryption is strictly local (client-side).
+- The project is end-to-end HE compliant and privacy-preserving.
+
+---
+
+## 📹 Demonstration Video
+
+- [YouTube or Google Drive Link](https://drive.google.com/file/d/1ln6-8D9kLNkrq_-0MTEetzu5VM0e-Xzf/view?usp=drive_link)
+
+---
+
+## 📚 References
+
+- NHANES 2013–2014 Dataset (CDC)
+- HEaaN GitHub: https://github.com/snucrypto/HEaan
+- American Diabetes Association Guidelines
